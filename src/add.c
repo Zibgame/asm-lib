@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   asm_lib.h                                          :+:      :+:    :+:   */
+/*   add.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zcadinot <zcadinot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/17 16:24:34 by zcadinot          #+#    #+#             */
-/*   Updated: 2025/11/17 19:44:19 by zcadinot         ###   ########.fr       */
+/*   Created: 2025/11/17 17:34:59 by zcadinot          #+#    #+#             */
+/*   Updated: 2025/11/17 19:45:09 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ASM_LIB_H
-# define ASM_LIB_H
+#include "asm_lib.h"
 
-typedef unsigned long	t_size;
-typedef long			t_ssize;
+int	add(int a, int b)
+{
+	int	res;
 
-t_ssize	write(int fd, const void *buf, t_size count);
-int		add(int a, int b);
-t_ssize	write(int fd, const void *buf, t_size count);
-void	swap(int *a, int *b);
-
-#endif
+	__asm__ (
+		"mov %1, %%eax\n\t"
+		"add %2, %%eax\n\t"
+		"mov %%eax, %0"
+		: "=r"(res)
+		: "r"(a), "r"(b)
+		: "eax"
+		);
+	return (res);
+}

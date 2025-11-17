@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   asm_lib.h                                          :+:      :+:    :+:   */
+/*   swap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zcadinot <zcadinot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/17 16:24:34 by zcadinot          #+#    #+#             */
-/*   Updated: 2025/11/17 19:44:19 by zcadinot         ###   ########.fr       */
+/*   Created: 2025/11/17 19:21:20 by zcadinot          #+#    #+#             */
+/*   Updated: 2025/11/17 19:45:38 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ASM_LIB_H
-# define ASM_LIB_H
+#include "asm_lib.h"
 
-typedef unsigned long	t_size;
-typedef long			t_ssize;
-
-t_ssize	write(int fd, const void *buf, t_size count);
-int		add(int a, int b);
-t_ssize	write(int fd, const void *buf, t_size count);
-void	swap(int *a, int *b);
-
-#endif
+void	swap(int *a, int *b)
+{
+	__asm__ (
+		"movl (%0), %%eax\n\t"
+		"xchgl %%eax, (%1)\n\t"
+		"movl %%eax, (%0)\n\t"
+		:
+		: "r"(a), "r"(b)
+		: "eax", "memory"
+		);
+}
