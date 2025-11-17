@@ -1,0 +1,126 @@
+📘 Notes sur les registres x86_64
+
+Les registres sont des emplacements mémoire ultra rapides à l’intérieur du CPU.
+Ce sont les "variables" de l’assembleur, mais avec des noms fixes et parfois des rôles imposés selon les conventions.
+
+🧩 Registres généraux (GPR — General Purpose Registers)
+🔹 RAX
+
+Registre principal pour les résultats de fonction
+
+Utilisé pour mettre le numéro du syscall (ex : 1 pour write)
+
+Très souvent utilisé comme registre temporaire
+
+🔹 RBX
+
+Registre général mais callee-saved (la fonction doit le restaurer)
+
+Moins utilisé pour les opérations temporaires
+
+🔹 RCX
+
+Sert de compteur dans les instructions comme rep movsb
+
+Peut aussi servir de registre temporaire
+
+🔹 RDX
+
+Utilisé pour le 3ᵉ argument des fonctions C
+
+Généralement utilisé pour stocker des longueurs / tailles
+
+🔹 RSI
+
+2ᵉ argument des fonctions C
+
+Très utilisé comme source dans les instructions movs, stos, etc.
+
+🔹 RDI
+
+1ᵉʳ argument des fonctions C
+
+Très utilisé pour pointer vers une zone mémoire, buffer, string…
+
+🔹 R8 – R11
+
+Registres volatiles (caller-saved)
+
+Utilisés pour les arguments 5 à 6 des fonctions
+
+Très pratiques comme registres temporaires
+
+🔹 R12 – R15
+
+Registres callee-saved
+
+Souvent utilisés pour stocker des variables "persistantes" dans une fonction
+
+🧱 Registres de la pile
+🔹 RSP — Stack Pointer
+
+Pointe sur le haut de la pile
+
+Décrémente pour empiler (push)
+
+Incrémente pour dépiler (pop)
+
+🔹 RBP — Base Pointer
+
+Utilisé comme repère fixe pour les variables locales
+
+Optionnel en assembleur pur (souvent omis pour optimiser)
+
+🧭 Conventions d’appel importantes
+🔥 Pour les fonctions C (System V AMD64)
+
+Les arguments sont passés dans cet ordre :
+
+RDI
+
+RSI
+
+RDX
+
+RCX
+
+R8
+
+R9
+
+→ Le résultat est toujours dans RAX.
+
+🔥 Pour les syscalls Linux
+
+Les registres ont un rôle imposé :
+
+RAX = numéro du syscall
+
+RDI = 1ᵉʳ argument
+
+RSI = 2ᵉ argument
+
+RDX = 3ᵉ argument
+
+R10 = 4ᵉ argument
+
+R8 = 5ᵉ argument
+
+R9 = 6ᵉ argument
+
+Exemple pour write(fd, buffer, len) :
+
+RAX = 1
+
+RDI = fd
+
+RSI = buffer
+
+RDX = len
+
+🎯 Résumé simple
+
+Oui : tu peux mettre ce que tu veux dans les registres
+→ mais pas si tu veux appeler une fonction C ou un syscall, car la convention d’appel impose l’ordre.
+
+Pour du code interne (inline asm simple), tu peux utiliser n’importe quel registre comme variable temporaire.
