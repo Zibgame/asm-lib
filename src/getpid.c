@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   asm_lib.h                                          :+:      :+:    :+:   */
+/*   getpid.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zcadinot <zcadinot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/17 16:24:34 by zcadinot          #+#    #+#             */
-/*   Updated: 2025/11/17 20:59:31 by zcadinot         ###   ########.fr       */
+/*   Created: 2025/11/17 20:45:17 by zcadinot          #+#    #+#             */
+/*   Updated: 2025/11/17 20:59:45 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ASM_LIB_H
-# define ASM_LIB_H
+#include "asm_lib.h"
 
-typedef unsigned long	t_size;
-typedef long			t_ssize;
-typedef long			t_pid;
+t_pid	getpid(void)
+{
+	t_pid	pid;
 
-t_ssize	write(int fd, const void *buf, t_size count);
-t_ssize	write(int fd, const void *buf, t_size count);
-void	swap(int *a, int *b);
-t_pid	getpid(void);
-int		add(int a, int b);
-
-#endif
+	__asm__ (
+		"mov $39, %%rax\n\t"
+		"syscall\n\t"
+		"mov %%rax, %0"
+		: "=r"(pid)
+		:
+		: "rax", "rcx", "r11", "memory"
+		);
+	return (pid);
+}

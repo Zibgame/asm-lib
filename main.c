@@ -6,11 +6,12 @@
 /*   By: zcadinot <zcadinot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 19:51:05 by zcadinot          #+#    #+#             */
-/*   Updated: 2025/11/17 19:57:31 by zcadinot         ###   ########.fr       */
+/*   Updated: 2025/11/17 21:01:31 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm_lib.h"
+#include <stdio.h>
 
 static void	test_swap(void)
 {
@@ -46,11 +47,20 @@ static void	test_write(void)
 	printf(" %ld\n", ret);
 }
 
+void	test_getpid(void)
+{
+	t_pid	pid;
+
+	pid = getpid();
+	printf("[getpid] PID renvoyé par getpid() = %ld\n", pid);
+}
+
 int	main(void)
 {
 	printf("===== TEST ASM-LIB =====\n");
 	test_swap();
 	test_add();
 	test_write();
+	test_getpid();
 	return (0);
 }
