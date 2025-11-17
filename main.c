@@ -5,17 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zcadinot <zcadinot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/17 16:25:31 by zcadinot          #+#    #+#             */
-/*   Updated: 2025/11/17 16:27:33 by zcadinot         ###   ########.fr       */
+/*   Created: 2025/11/17 17:26:42 by zcadinot          #+#    #+#             */
+/*   Updated: 2025/11/17 17:26:52 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-
 #include "asm_lib.h"
 
-int main()
+int	main(void)
 {
-	printf("main running ... \n");
+	char	c;
+
+	c = 'z';
+	write(1, &c, 1);
 	return (0);
 }
