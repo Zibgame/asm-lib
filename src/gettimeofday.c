@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   asm_lib.h                                          :+:      :+:    :+:   */
+/*   gettimeofday.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zcadinot <zcadinot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/17 21:33:02 by zcadinot          #+#    #+#             */
-/*   Updated: 2025/11/17 21:36:17 by zcadinot         ###   ########.fr       */
+/*   Created: 2025/11/17 21:23:22 by zcadinot          #+#    #+#             */
+/*   Updated: 2025/11/17 21:38:44 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ASM_LIB_H
-# define ASM_LIB_H
+#include "asm_lib.h"
+#include "asm_lib.h"
 
-typedef unsigned long	t_size;
-typedef long			t_ssize;
-typedef long			t_pid;
-typedef long			t_suseconds;
-typedef long			t_time;
-
-struct s_timeval
+int	gettimeofday(struct s_timeval *tv)
 {
-	t_time			tv_sec;
-	t_suseconds		tv_usec;
-};
+	long	ret;
 
-t_ssize	write(int fd, const void *buf, t_size count);
-void	swap(int *a, int *b);
-t_pid	getpid(void);
-int		add(int a, int b);
-int		gettimeofday(struct s_timeval *tv);
-
-#endif
+	__asm__ (
+		"mov $96, %%rax\n\t"
+		"mov %1, %%rdi\n\t"
+		"xor %%rsi, %%rsi\n\t"
+		"syscall\n\t"
+		"mov %%rax, %0"
+		: "=r"(ret)
+		: "r"(tv)
+		: "rax", "rdi", "rsi", "rcx", "r11", "memory"
+		);
+	return ((int)(ret));
+}

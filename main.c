@@ -6,7 +6,7 @@
 /*   By: zcadinot <zcadinot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 19:51:05 by zcadinot          #+#    #+#             */
-/*   Updated: 2025/11/17 21:01:31 by zcadinot         ###   ########.fr       */
+/*   Updated: 2025/11/17 21:35:47 by zcadinot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,17 @@ void	test_getpid(void)
 	printf("[getpid] PID renvoyé par getpid() = %ld\n", pid);
 }
 
+static void	test_gettimeofday(void)
+{
+	struct s_timeval	tv;
+
+	if (gettimeofday(&tv) == 0)
+		printf("[gettimeofday] secondes = %ld, microsecondes = %ld\n",
+			tv.tv_sec, tv.tv_usec);
+	else
+		printf("[gettimeofday] erreur lors de l'appel\n");
+}
+
 int	main(void)
 {
 	printf("===== TEST ASM-LIB =====\n");
@@ -62,5 +73,6 @@ int	main(void)
 	test_add();
 	test_write();
 	test_getpid();
+	test_gettimeofday();
 	return (0);
 }
